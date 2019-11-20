@@ -384,7 +384,6 @@ public class BlendPictures extends AppCompatActivity {
 //                    Toast.makeText(this, ""+j, Toast.LENGTH_SHORT).show();
                     layout.addView(stickerImgV);
                     stickerImgV.setImageBitmap(bitmap);
-                    stickerImgV.setTag("gallery_image");
 
                     /**
                      * test
