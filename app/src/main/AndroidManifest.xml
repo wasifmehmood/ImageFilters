@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.photo.mixer.app">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/photosblender"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/photosblender"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+
+        <meta-data
+            android:name="com.google.android.gms.ads.AD_MANAGER_APP"
+            android:value="true" />
+
+        <!--<meta-data-->
+        <!--android:name="com.google.android.gms.ads.APPLICATION_ID"-->
+        <!--android:value="true" />-->
+
+        <activity
+            android:name="com.photo.mixer.app.SinglePicture"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.photo.mixer.app.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.photo.mixer.app.SlideImages"
+            android:label="Saved Photos"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.photo.mixer.app.mySplashScreen"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.photo.mixer.app.BlendPictures"
+            android:label="Photo Blender"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.photo.mixer.app.PickImageEditor"
+            android:label="Photo Editor"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.photo.mixer.app.PhotoEditor"
+            android:label="Photo Filters"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.photo.mixer.app.BlenderActivity"
+            android:label="Choose Image"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
+
+        <activity
+            android:name="com.photo.mixer.app.MyPictures"
+            android:label="Saved Photos"
+            android:screenOrientation="portrait" />
+
+        <provider
+        android:name="androidx.core.content.FileProvider"
+        android:authorities="com.photo.mixer.app"
+        android:exported="false"
+        android:grantUriPermissions="true">
+
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/provider_paths" />
+    </provider>
+    </application>
+</manifest>

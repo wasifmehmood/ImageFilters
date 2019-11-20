@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Photo Mixer</string>
+    <string name="activity_title_main">Filters</string>
+    <string name="action_settings">Settings</string>
+    <string name="filters">FILTERS</string>
+    <string name="edit">EDIT</string>
+
+    <string name="lbl_brightness">BRIGHTNESS</string>
+    <string name="lbl_contrast">CONTRAST</string>
+    <string name="lbl_saturation">SATURATION</string>
+    <string name="tab_filters">FILTERS</string>
+    <string name="tab_edit">EDIT</string>
+
+    <string name="roboto_medium">sans-serif-medium</string>
+    <string name="filter_normal">Normal</string>
+    <string name="action_save">SAVE</string>
+    <string name="action_open">OPEN</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tab_sticker">Stickers</string>
+
+    <!--test ads-->
+    <string name="Banner">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="interstial">ca-app-pub-3940256099942544/1033173712</string>
+
+
+    <!--original ads-->
+    <!--<string name="Banner">ca-app-pub-3940256099942544/6300978111</string>-->
+    <!--<string name="interstial">ca-app-pub-3940256099942544/1033173712</string>-->
+    <string name="appid">ca-app-pub-4438814465354836~5126548456</string>
+
+    <!--<string name="appid">ca-app-pub-8154237344141247~2215636049</string>-->
+
+</resources>

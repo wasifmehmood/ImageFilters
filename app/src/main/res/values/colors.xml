@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#10133d</color>
+    <color name="colorPrimaryDark">#323866</color>
+    <color name="colorAccent">#9272ef</color>
+
+    <color name="btnColorCode">#434273</color>
+    <color name="white">#fff</color>
+    <color name="darkLight">#fff</color>
+
+    <color name="bgcolor"></color>
+    <color name="halftransparentgray">#606d6c6d</color>
+
+    <!--buttons colors codes-->
+    <color name="blenderColor">#9272ef</color>
+    <color name="photoEditor">#41abf5</color>
+    <color name="myphotos">#ff62e7</color>
+    <color name="rateus">#61d070</color>
+
+    <!--
+        //imagefilters color
+    -->
+
+    <color name="color_option_menu">#FF3990</color>
+    <color name="filter_label_normal">#8A8889</color>
+    <color name="filter_label_selected">#221F20</color>
+
+
+</resources>

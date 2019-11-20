@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/blender_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context="com.photo.mixer.app.BlendPictures">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/ChooseMultipleImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/btn_bg2"
+            android:paddingLeft="@dimen/_20sdp"
+            android:paddingRight="@dimen/_20sdp"
+            android:text="Add Image"
+            android:textColor="@android:color/white" />
+
+        <ImageView
+            android:id="@+id/saveImages"
+            android:layout_width="@dimen/_55sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_marginLeft="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:src="@drawable/save" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/FrameBlender"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_350sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_60sdp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/FrameBlender"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical"
+        android:weightSum="8">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_weight="7"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/_42sdp"
+                android:layout_height="49dp"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_weight="0.25"
+                android:src="@mipmap/ic_launcher" />
+
+            <ImageView
+                android:layout_width="@dimen/_42sdp"
+                android:layout_height="48dp"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_weight="0.25"
+                android:src="@mipmap/ic_launcher" />
+
+            <ImageView
+                android:layout_width="@dimen/_42sdp"
+                android:layout_height="51dp"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_weight="0.25"
+                android:src="@mipmap/ic_launcher" />
+
+            <ImageView
+                android:layout_width="@dimen/_42sdp"
+                android:layout_height="51dp"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_weight="0.25"
+                android:src="@mipmap/ic_launcher" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:orientation="vertical">
+
+            <TextView
+                android:gravity="center"
+                android:id="@+id/textopacity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:text="Opacity"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_14sdp" />
+
+            <SeekBar
+                android:id="@+id/opacity"
+                android:layout_width="match_parent"
+                android:layout_height="113dp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:max="255"
+                android:progress="255"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
