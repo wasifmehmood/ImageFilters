@@ -34,7 +34,7 @@ import static com.photo.mixer.app.BlenderActivity.flags;
 import static com.photo.mixer.app.BlenderActivity.paths;
 import static com.photo.mixer.app.BlenderActivity.total;
 
-public class BlendPictures extends AppCompatActivity {
+public class BlendPictures extends AppCompatActivity implements View.OnClickListener {
 
     private static final int NONE = 0;
     private static final int DRAG = 1;
@@ -99,6 +99,8 @@ public class BlendPictures extends AppCompatActivity {
 
 //                    setAlpha = true;
 
+//                    Toast.makeText(BlendPictures.this, "Progress" + progress + " Tag:" + alpha, Toast.LENGTH_SHORT).show();
+
                     switch (mlastTouch) {
                         case 1:
                             iv_sticker.setimageAplha(alpha);
@@ -106,7 +108,7 @@ public class BlendPictures extends AppCompatActivity {
                             break;
 
                         case 2:
-                            stickerImgV.setimageAplha(alpha);
+                            stickerImgView.setimageAplha(alpha);
                             setAlphaImgV = true;
                             break;
 
@@ -145,6 +147,7 @@ public class BlendPictures extends AppCompatActivity {
     private float xCoOrdinate, yCoOrdinate;
     private int REQUEST_GALLERY_IMAGE = 1001;
     private int counter = 0;
+    int alphaValue;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -153,6 +156,21 @@ public class BlendPictures extends AppCompatActivity {
         setContentView(R.layout.activity_blend_pictures);
         SetBitmap();
         stickerImgV = new StickerImgView(this);
+
+        layout.isFocusable();
+        layout.setFocusable(true);
+        layout.setClickable(true);
+
+//        layout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                removeAllIconsOnImage();
+//            }
+//        });
+
+        layout.setOnClickListener(this);
+//        Toast.makeText(this, ""+this.getCurrentFocus(), Toast.LENGTH_SHORT).show();
 
         if (BlenderActivity.flags == 1) {
             String camshotUri = BlenderActivity.imageFilePathCameras;
@@ -166,12 +184,79 @@ public class BlendPictures extends AppCompatActivity {
             }
 //            Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
 
-            layout.addView(iv_sticker);
-//            Toast.makeText(this, ""+iv_sticker.getImageBitmap(), Toast.LENGTH_SHORT).show();
-            iv_sticker.setImageBitmap(moriginalImage);
-//            Toast.makeText(this, ""+iv_sticker.getImageBitmap(), Toast.LENGTH_SHORT).show();
-            checkCameraImage = true;
-            iv_sticker.setTag("camera_image");
+//            layout.addView(iv_sticker);
+////            Toast.makeText(this, ""+iv_sticker.getImageBitmap(), Toast.LENGTH_SHORT).show();
+//            iv_sticker.setImageBitmap(moriginalImage);
+////            Toast.makeText(this, ""+iv_sticker.getImageBitmap(), Toast.LENGTH_SHORT).show();
+//            checkCameraImage = true;
+//            iv_sticker.setTag("camera_image");
+
+            totalImg = 0;
+
+            stickerImgViewArrayList.add(new StickerImgView(this));
+            stickerImgViewArrayList.get(totalImg).isFocusable();
+            stickerImgViewArrayList.get(totalImg).setClickable(true);
+            stickerImgViewArrayList.get(totalImg).setFocusable(true);
+            stickerImgViewArrayList.get(totalImg).setFocusableInTouchMode(true);
+            stickerImgViewArrayList.get(totalImg).setOnClickListener(this);
+            stickerImgViewArrayList.get(totalImg).setTag("TouchListeners" + totalImg);
+            stickerImgViewArrayList.get(totalImg).setLayoutParams(new android.view.ViewGroup.LayoutParams(800, 800));
+            stickerImgViewArrayList.get(totalImg).setMaxHeight(400);
+            stickerImgViewArrayList.get(totalImg).setMaxWidth(400);
+            layout.addView(stickerImgViewArrayList.get(totalImg));
+            addImage(totalImg, moriginalImage);
+            stickerImgView = (StickerImgView) findViewById(R.id.blender_layout).findViewWithTag(stickerImgViewArrayList.get(totalImg).getTag());
+            stickerImgV = stickerImgViewArrayList.get(totalImg);
+            alphaValue = stickerImgView.getImageAlpha();
+            mbarOpacity.setProgress(alphaValue);
+
+            final int j = totalImg;
+
+            stickerImgViewArrayList.get(j).setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+//                ImageView view = (ImageView) v;
+//                view.bringToFront();
+
+                    removeAllIconsOnImage();
+
+//                    Toast.makeText(BlendPictures.this, "" + v.isFocused(), Toast.LENGTH_SHORT).show();
+                    setAlphCheck = j;
+
+//                    stickerImgViews[i].setControlsVisibility(true);
+
+                    viewTransformation(v, event);
+                    view = (StickerView) v;
+                    view.setControlsVisibility(true);
+                    tag = (String) v.getTag();
+
+                    stickerImgView = (StickerImgView) findViewById(R.id.blender_layout).findViewWithTag(tag);
+                    stickerImgV = stickerImgViewArrayList.get(j);
+                    alphaValue = stickerImgView.getImageAlpha();
+                    mbarOpacity.setProgress(alphaValue);
+
+
+                    Log.e("count", "" + j);
+//                        Toast.makeText(BlendPictures.this, "count: "+i, Toast.LENGTH_SHORT).show();
+
+                    if (count == 0) {
+                        count = 1;
+//                            if (totalImg == 1) {
+                        stickerImgViewArrayList.get(j).setControlsVisibility(true);
+//                            }
+                    } else {
+                        count = 0;
+                        stickerImgViewArrayList.get(j).setControlsVisibility(true);
+                    }
+                    mlastTouch = 2;
+                    return true;
+                }
+            });
+
+            totalImg++;
+
+
+
 
 //            iv_sticker.setOnTouchListener(new View.OnTouchListener() {
 //                @Override
@@ -198,13 +283,14 @@ public class BlendPictures extends AppCompatActivity {
 
         }
         if (BlenderActivity.flags == 2) {
-            Toast.makeText(this, "0000", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "0000", Toast.LENGTH_SHORT).show();
             SplitImages();
         }
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                removeAllIconsOnImage();
                 openGallery();
             }
         });
@@ -227,7 +313,7 @@ public class BlendPictures extends AppCompatActivity {
                 SaveTheImage();
             }
         });
-        setTouchListeners();
+//        setTouchListeners();
     }
 
     public void setTouchListeners() {
@@ -244,6 +330,7 @@ public class BlendPictures extends AppCompatActivity {
                     viewTransformation(view, event);
                     views = (StickerView) view;
                     views.setControlsVisibility(true);
+//                    Toast.makeText(BlendPictures.this, "TOAST", Toast.LENGTH_SHORT).show();
                 } else if (tags.equals("gallery_image")) {
                     if (checkgalleryImage) {
                         stickerImgV.setControlsVisibility(false);
@@ -251,6 +338,8 @@ public class BlendPictures extends AppCompatActivity {
                     viewTransformation(view, event);
                     views = (StickerView) view;
                     views.setControlsVisibility(true);
+//                    Toast.makeText(BlendPictures.this, "TOAST2", Toast.LENGTH_SHORT).show();
+
                 }
 //                     your stuff
                 return true;
@@ -382,82 +471,79 @@ public class BlendPictures extends AppCompatActivity {
 
 //                    RelativeLayout relativeLayout = new RelativeLayout(this);
 //                    Toast.makeText(this, ""+j, Toast.LENGTH_SHORT).show();
-                    layout.addView(stickerImgV);
-                    stickerImgV.setImageBitmap(bitmap);
+//                    layout.addView(stickerImgV);
+//                    stickerImgV.setImageBitmap(bitmap);
+//                    stickerImgV.setTag("gallery_image");
 
-                    /**
-                     * test
-                     */
+                    stickerImgViewArrayList.add(new StickerImgView(this));
+                    stickerImgViewArrayList.get(totalImg).isFocusable();
+                    stickerImgViewArrayList.get(totalImg).setClickable(true);
+                    stickerImgViewArrayList.get(totalImg).setFocusable(true);
+                    stickerImgViewArrayList.get(totalImg).setFocusableInTouchMode(true);
+                    stickerImgViewArrayList.get(totalImg).setOnClickListener(this);
+                    stickerImgViewArrayList.get(totalImg).setTag("TouchListeners" + totalImg);
+                    stickerImgViewArrayList.get(totalImg).setLayoutParams(new android.view.ViewGroup.LayoutParams(800, 800));
+                    stickerImgViewArrayList.get(totalImg).setMaxHeight(400);
+                    stickerImgViewArrayList.get(totalImg).setMaxWidth(400);
+                    layout.addView(stickerImgViewArrayList.get(totalImg));
+                    addImage(totalImg, bitmap);
+                    stickerImgView = (StickerImgView) findViewById(R.id.blender_layout).findViewWithTag(stickerImgViewArrayList.get(totalImg).getTag());
+                    stickerImgV = stickerImgViewArrayList.get(totalImg);
+                    alphaValue = stickerImgView.getImageAlpha();
+                    mbarOpacity.setProgress(alphaValue);
 
-//                    for (i = totalImg; i < totalImg+1; i++) {
-//
-////                Toast.makeText(BlendPictures.this, "" + totalImg, Toast.LENGTH_SHORT).show();
-//
-//                        stickerImgViews[totalImg] = new StickerImgView(this);
-//
-//                        stickerImgViews[totalImg].isFocusable();
-//                        stickerImgViews[totalImg].setTag("TouchListeners" + totalImg);
-//                        stickerImgViews[totalImg].setLayoutParams(new android.view.ViewGroup.LayoutParams(800, 800));
-//                        stickerImgViews[totalImg].setMaxHeight(400);
-//                        stickerImgViews[totalImg].setMaxWidth(400);
-//                        stickerImgViews[totalImg].setImageBitmap(bitmap);
-//                        layout.addView(stickerImgViews[totalImg]);
-//
-//                        Toast.makeText(this, "count: " + stickerImgViews.length, Toast.LENGTH_SHORT).show();
-//
-////                        stickerImgViewArrayList.add(new StickerImgView(this));
-////                        stickerImgViewArrayList.get(totalImg)
-//
-////            if (i >= total) {
-////                stickerImgViews[i].setVisibility(View.INVISIBLE);
-////            }
-//
-//                        final int j = i;
-//
-//                        stickerImgViews[totalImg].setOnTouchListener(new View.OnTouchListener() {
-//                            @Override
-//                            public boolean onTouch(View v, MotionEvent event) {
-////                ImageView view = (ImageView) v;
-////                view.bringToFront();
-//
-//                                removeAllIconsOnImage();
-//
-//                                Toast.makeText(BlendPictures.this, "" + v.isFocused(), Toast.LENGTH_SHORT).show();
-//                                setAlphCheck = totalImg;
-//
-////                    stickerImgViews[i].setControlsVisibility(true);
-//
-//                                viewTransformation(v, event);
-//                                view = (StickerView) v;
-//                                view.setControlsVisibility(true);
-//                                tag = (String) v.getTag();
-//
-//                                stickerImgView = (StickerImgView) findViewById(R.id.blender_layout).findViewWithTag(tag);
-//                                Log.e("count", "" + totalImg);
-////                        Toast.makeText(BlendPictures.this, "count: "+i, Toast.LENGTH_SHORT).show();
-//
-//                                if (count == 0) {
-//                                    count = 1;
-////                            if (totalImg == 1) {
-//                                    stickerImgViews[totalImg].setControlsVisibility(false);
-////                            }
-//                                } else {
-//                                    count = 0;
-//                                    stickerImgViews[totalImg].setControlsVisibility(true);
-//                                }
-//                                mlastTouch = 2;
-//                                return true;
+//                    Toast.makeText(this, "count: " + stickerImgViews.length, Toast.LENGTH_SHORT).show();
+
+//            if (i >= total) {
+//                stickerImgViews[i].setVisibility(View.INVISIBLE);
+//            }
+
+                    final int j = totalImg;
+
+                    stickerImgViewArrayList.get(j).setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+//                ImageView view = (ImageView) v;
+//                view.bringToFront();
+
+                            removeAllIconsOnImage();
+
+//                            Toast.makeText(BlendPictures.this, "" + v.isFocused(), Toast.LENGTH_SHORT).show();
+                            setAlphCheck = j;
+
+//                    stickerImgViews[i].setControlsVisibility(true);
+
+                            viewTransformation(v, event);
+                            view = (StickerView) v;
+                            view.setControlsVisibility(true);
+                            tag = (String) v.getTag();
+
+                            stickerImgView = (StickerImgView) findViewById(R.id.blender_layout).findViewWithTag(tag);
+                            stickerImgV = stickerImgViewArrayList.get(j);
+                            alphaValue = stickerImgView.getImageAlpha();
+                            mbarOpacity.setProgress(alphaValue);
+
+
+                            Log.e("count", "" + j);
+//                        Toast.makeText(BlendPictures.this, "count: "+i, Toast.LENGTH_SHORT).show();
+
+                            if (count == 0) {
+                                count = 1;
+//                            if (totalImg == 1) {
+                                stickerImgViewArrayList.get(j).setControlsVisibility(true);
 //                            }
-//                        });
-//                    }
-//
-//
-//
-//                    /**
-//                     * test
-//                     */
-//                totalImg++;
+                            } else {
+                                count = 0;
+                                stickerImgViewArrayList.get(j).setControlsVisibility(true);
+                            }
+                            mlastTouch = 2;
+                            return true;
+                        }
+                    });
 
+//                    Toast.makeText(this, "TTT "+totalImg, Toast.LENGTH_SHORT).show();
+                    totalImg++;
+//                    Toast.makeText(this, "TTTTT "+totalImg, Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(this, "IN"+layout.getChildCount(), Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(this, "out", Toast.LENGTH_SHORT).show();
 
@@ -469,27 +555,27 @@ public class BlendPictures extends AppCompatActivity {
 
 //                    stickerImgV.setOnTouchListener(mTouchListener);
 
-                    stickerImgV.setOnTouchListener(new View.OnTouchListener() {
-                        @Override
-                        public boolean onTouch(View view, MotionEvent motionEvent) {
-//                            Toast.makeText(BlendPictures.this, "stickerImgV", Toast.LENGTH_SHORT).show();
-                            if (count == 0) {
-                                count = 1;
-                                stickerImgV.setControlsVisibility(false);
-                                /* Set Visibility*/
-                            } else {
-                                count = 0;
-                                stickerImgV.setControlsVisibility(true);
-                            }
-
-                            viewTransformation(view, motionEvent);
-                            if (mlastTouch != 2)
-                                mlastTouch = 2;
-                            else
-                                mlastTouch = -1;
-                            return true;
-                        }
-                    });
+//                    stickerImgV.setOnTouchListener(new View.OnTouchListener() {
+//                        @Override
+//                        public boolean onTouch(View view, MotionEvent motionEvent) {
+////                            Toast.makeText(BlendPictures.this, "stickerImgV", Toast.LENGTH_SHORT).show();
+//                            if (count == 0) {
+//                                count = 1;
+//                                stickerImgV.setControlsVisibility(false);
+//                                /* Set Visibility*/
+//                            } else {
+//                                count = 0;
+//                                stickerImgV.setControlsVisibility(true);
+//                            }
+//
+//                            viewTransformation(view, motionEvent);
+//                            if (mlastTouch != 2)
+//                                mlastTouch = 2;
+//                            else
+//                                mlastTouch = -1;
+//                            return true;
+//                        }
+//                    });
 
 //                    ArrayList<Uri> mArrayUri = new ArrayList<Uri>();
 //                    mArrayUri.add(mImageUri);
@@ -535,7 +621,7 @@ public class BlendPictures extends AppCompatActivity {
 
     public void addImage(int i, Bitmap fgBitmap) {
 //        mimageViewsArray[i].setImageBitmap(fgBitmap);
-        stickerImgViews[i].setImageBitmap(fgBitmap);
+        stickerImgViewArrayList.get(i).setImageBitmap(fgBitmap);
         // Adds the view to the layout
     }
 
@@ -644,16 +730,34 @@ public class BlendPictures extends AppCompatActivity {
             for (i = 0; i < totalImg; i++) {
 
 //                Toast.makeText(BlendPictures.this, "" + totalImg, Toast.LENGTH_SHORT).show();
+//
+//                stickerImgViews[i] = new StickerImgView(this);
+//                stickerImgViews[i].isFocusable();
+//                stickerImgViews[i].setTag("TouchListeners" + i);
+//                stickerImgViews[i].setLayoutParams(new android.view.ViewGroup.LayoutParams(800, 800));
+//                stickerImgViews[i].setMaxHeight(400);
+//                stickerImgViews[i].setMaxWidth(400);
+//                layout.addView(stickerImgViews[i]);
 
-                stickerImgViews[i] = new StickerImgView(this);
-                stickerImgViews[i].isFocusable();
-                stickerImgViews[i].setTag("TouchListeners" + i);
-                stickerImgViews[i].setLayoutParams(new android.view.ViewGroup.LayoutParams(800, 800));
-                stickerImgViews[i].setMaxHeight(400);
-                stickerImgViews[i].setMaxWidth(400);
-                layout.addView(stickerImgViews[i]);
+                stickerImgViewArrayList.add(new StickerImgView(this));
+                stickerImgViewArrayList.get(i).isFocusable();
+                stickerImgViewArrayList.get(i).setClickable(true);
+                stickerImgViewArrayList.get(i).setFocusable(true);
+                stickerImgViewArrayList.get(i).setFocusableInTouchMode(true);
+                stickerImgViewArrayList.get(i).setOnClickListener(this);
+                stickerImgViewArrayList.get(i).setTag("TouchListeners" + i);
+                stickerImgViewArrayList.get(i).setLayoutParams(new android.view.ViewGroup.LayoutParams(800, 800));
+                stickerImgViewArrayList.get(i).setMaxHeight(400);
+                stickerImgViewArrayList.get(i).setMaxWidth(400);
+                layout.addView(stickerImgViewArrayList.get(i));
 
-                Toast.makeText(this, "count: " + stickerImgViews.length, Toast.LENGTH_SHORT).show();
+                stickerImgView = (StickerImgView) findViewById(R.id.blender_layout).findViewWithTag(stickerImgViewArrayList.get(i).getTag());
+                stickerImgV = stickerImgViewArrayList.get(i);
+                alphaValue = stickerImgView.getImageAlpha();
+                mbarOpacity.setProgress(alphaValue);
+
+
+//                Toast.makeText(this, "count: " + stickerImgViews.length, Toast.LENGTH_SHORT).show();
 
 //            if (i >= total) {
 //                stickerImgViews[i].setVisibility(View.INVISIBLE);
@@ -661,7 +765,7 @@ public class BlendPictures extends AppCompatActivity {
 
                 final int j = i;
 
-                stickerImgViews[j].setOnTouchListener(new View.OnTouchListener() {
+                stickerImgViewArrayList.get(j).setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
 //                ImageView view = (ImageView) v;
@@ -669,7 +773,7 @@ public class BlendPictures extends AppCompatActivity {
 
                         removeAllIconsOnImage();
 
-                        Toast.makeText(BlendPictures.this, "" + v.isFocused(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(BlendPictures.this, "" + v.isFocused(), Toast.LENGTH_SHORT).show();
                         setAlphCheck = j;
 
 //                    stickerImgViews[i].setControlsVisibility(true);
@@ -680,22 +784,27 @@ public class BlendPictures extends AppCompatActivity {
                         tag = (String) v.getTag();
 
                         stickerImgView = (StickerImgView) findViewById(R.id.blender_layout).findViewWithTag(tag);
+                        stickerImgV = stickerImgViewArrayList.get(j);
+                        alphaValue = stickerImgView.getImageAlpha();
+                        mbarOpacity.setProgress(alphaValue);
+
                         Log.e("count", "" + j);
 //                        Toast.makeText(BlendPictures.this, "count: "+i, Toast.LENGTH_SHORT).show();
 
                         if (count == 0) {
                             count = 1;
 //                            if (totalImg == 1) {
-                            stickerImgViews[j].setControlsVisibility(false);
+                            stickerImgViewArrayList.get(j).setControlsVisibility(true);
 //                            }
                         } else {
                             count = 0;
-                            stickerImgViews[j].setControlsVisibility(true);
+                            stickerImgViewArrayList.get(j).setControlsVisibility(true);
                         }
                         mlastTouch = 2;
                         return true;
                     }
                 });
+
             }
         }
 
@@ -759,32 +868,32 @@ public class BlendPictures extends AppCompatActivity {
 
         //////////////////////Hello
 
-        iv_sticker.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-//                iv_sticker.setControlsVisibility();
-                Toast.makeText(BlendPictures.this, "touch", Toast.LENGTH_SHORT).show();
-                if (count == 0) {
-                    count = 1;
-                    iv_sticker.setControlsVisibility(false);
-                } else {
-                    count = 0;
-                    iv_sticker.setControlsVisibility(true);
-                }
-                viewTransformation(view, motionEvent);
-//                if (mlastTouch != 2)
-//                    mlastTouch = 3;
+//        iv_sticker.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+////                iv_sticker.setControlsVisibility();
+//                Toast.makeText(BlendPictures.this, "touch", Toast.LENGTH_SHORT).show();
+//                if (count == 0) {
+//                    count = 1;
+//                    iv_sticker.setControlsVisibility(false);
+//                } else {
+//                    count = 0;
+//                    iv_sticker.setControlsVisibility(true);
+//                }
+//                viewTransformation(view, motionEvent);
+////                if (mlastTouch != 2)
+////                    mlastTouch = 3;
+////                else
+////                    mlastTouch = -1;
+//
+//                if (mlastTouch != 1)
+//                    mlastTouch = 1;
 //                else
 //                    mlastTouch = -1;
-
-                if (mlastTouch != 1)
-                    mlastTouch = 1;
-                else
-                    mlastTouch = -1;
-
-                return true;
-            }
-        });
+//
+//                return true;
+//            }
+//        });
 
 
 //        m_imgView.setOnTouchListener(new View.OnTouchListener() {
@@ -801,11 +910,11 @@ public class BlendPictures extends AppCompatActivity {
     }
 
     private void removeAllIconsOnImage() {
-        for (int j = 0; j < stickerImgViews.length; j++) {
-            stickerImgViews[j].setControlsVisibility(false);
+        for (int j = 0; j < stickerImgViewArrayList.size(); j++) {
+            stickerImgViewArrayList.get(j).setControlsVisibility(false);
         }
-        if (stickerImgV != null) {
-            stickerImgV.setControlsVisibility(false);
+        if (stickerImgView != null) {
+            stickerImgView.setControlsVisibility(false);
         }
     }
 
@@ -875,6 +984,16 @@ public class BlendPictures extends AppCompatActivity {
 //            floatingMenuButton.setVisibility(View.VISIBLE);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    public void onClick(View v) {
+
+        if (v.getId() == R.id.FrameBlender)
+        {
+            removeAllIconsOnImage();
         }
     }
 }

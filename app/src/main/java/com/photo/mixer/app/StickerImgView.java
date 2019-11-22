@@ -28,6 +28,10 @@ public class StickerImgView extends StickerView {
     public void setimageAplha(int alpha) {
         miv_mains.setAlpha(alpha);
     }
+    public int getImageAlpha()
+    {
+       return miv_mains.getImageAlpha();
+    }
 
     public void setMaxWidth(int setMaxWidth) {
         miv_mains.setMaxWidth(setMaxWidth);
@@ -69,4 +73,5 @@ public class StickerImgView extends StickerView {
     public Bitmap getImageBitmap() {
         return ((BitmapDrawable) this.miv_mains.getDrawable()).getBitmap();
     }
+
 }

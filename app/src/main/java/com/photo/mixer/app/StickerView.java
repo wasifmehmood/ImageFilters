@@ -340,12 +340,19 @@ public abstract class StickerView extends FrameLayout {
             mmiv_delete.setVisibility(View.GONE);
             miv_flip.setVisibility(View.GONE);
             miv_scale.setVisibility(View.GONE);
+            visible = false;
         } else {
             iv_border.setVisibility(View.VISIBLE);
             mmiv_delete.setVisibility(View.VISIBLE);
             miv_flip.setVisibility(View.VISIBLE);
             miv_scale.setVisibility(View.VISIBLE);
+            visible = true;
         }
+    }
+    static boolean visible;
+    public boolean getControlsVisibility()
+    {
+        return visible;
     }
 
     protected View getImageViewFlip() {

@@ -14,6 +14,7 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         InitViews();
         requestForPermissions();
         adview();
+
+        MobileAds.initialize(this,getResources().getString(R.string.appid));
 
 //        MobileAds.initialize(this, getResources().getString(R.string.appid));
 
