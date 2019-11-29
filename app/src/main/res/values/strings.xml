@@ -21,15 +21,20 @@
     <string name="tab_sticker">Stickers</string>
 
     <!--test ads-->
-    <string name="Banner">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="interstial">ca-app-pub-3940256099942544/1033173712</string>
-        <string name="appid">ca-app-pub-4438814465354836~5126548456</string>
+<!--    <string name="Banner">ca-app-pub-3940256099942544/6300978111</string>-->
+<!--    <string name="interstial">ca-app-pub-3940256099942544/1033173712</string>-->
+<!--        <string name="appid">ca-app-pub-4438814465354836~5126548456</string>-->
 
 
     <!--original ads-->
 <!--    <string name="Banner">ca-app-pub-4438814465354836/3345249848</string>-->
 <!--    <string name="interstial">ca-app-pub-4438814465354836/2830244523</string>-->
 <!--    <string name="appid">ca-app-pub-4438814465354836~5126548456</string>-->
+
+    <string name="appid">ca-app-pub-8589419510089723~9312591464</string>
+    <string name="Banner">ca-app-pub-8589419510089723/5824293664</string>
+    <string name="interstial">ca-app-pub-8589419510089723/3198130327</string>
+
 
     <string name="are_you_sure">Are you sure?</string>
 
